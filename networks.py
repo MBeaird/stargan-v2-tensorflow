@@ -101,7 +101,7 @@ class MappingNetwork(tf.keras.Model):
         for n_d in range(self.num_domains):
             for i in range(3):
                 layers += [FullyConnected(units=self.hidden_dim, sn=self.sn, name='domain_{}_unshared_fc_{}'.format(n_d, i))]
-                layers += [Relu()]
+                layers += [Relu( name='domain_{}_unshared_fc_relu_{}'.format(n_d, i) )]
             layers += [FullyConnected(units=self.style_dim, sn=self.sn, name='domain_{}_style_fc'.format(n_d))]
 
             unshared_layers += [Sequential(layers)]
