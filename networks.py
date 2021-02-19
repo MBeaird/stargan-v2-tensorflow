@@ -152,9 +152,9 @@ class StyleEncoder(tf.keras.Model):
             blocks += [ResBlock(ch_in, ch_out, downsample=True, sn=self.sn, name='resblock_' + str(i))]
             ch_in = ch_out
 
-        blocks += [Leaky_Relu(alpha=0.2)]
+        blocks += [Leaky_Relu(alpha=0.2, name='leaky_relu_before')]
         blocks += [Conv(channels=ch_out, kernel=4, stride=1, pad=0, sn=self.sn, name='conv')]
-        blocks += [Leaky_Relu(alpha=0.2)]
+        blocks += [Leaky_Relu(alpha=0.2, name='leaky_relu_after')]
 
         shared_layers = Sequential(blocks)
 
@@ -212,10 +212,10 @@ class Discriminator(tf.keras.Model):
 
             ch_in = ch_out
 
-        blocks += [Leaky_Relu(alpha=0.2)]
+        blocks += [Leaky_Relu(alpha=0.2, name='leaky_relu_0')]
         blocks += [Conv(channels=ch_out, kernel=4, stride=1, pad=0, sn=self.sn, name='conv_0')]
 
-        blocks += [Leaky_Relu(alpha=0.2)]
+        blocks += [Leaky_Relu(alpha=0.2, name='leaky_relu_1')]
         blocks += [Conv(channels=self.num_domains, kernel=1, stride=1, sn=self.sn, name='conv_1')]
 
         encoder = Sequential(blocks)
